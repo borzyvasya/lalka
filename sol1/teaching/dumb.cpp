@@ -20,7 +20,7 @@ void calc(double value1, char action, double value2) {
 			break;
 
 		default:
-			cout << "wrong action..." << "\n";
+			cout << "wrong action..." << '\n';
 	}
 
 }
