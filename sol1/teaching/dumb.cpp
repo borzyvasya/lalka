@@ -1,64 +1,53 @@
 #include "std_lib_facilities.h"
 
 
-void calc(double value1, char action, double value2) {
-	switch (action) {
-		case '+':
-			cout << value1 << " + " << value2 << " = " << value1 + value2 << "\n";
-			break;
-
-		case '-':
-			cout << value1 << " - " << value2 << " = " << value1 - value2 << "\n";
-			break;
-
-		case '*':
-			cout << value1 << " * " << value2 << " = " << value1 * value2 << "\n";
-			break;
-
-		case '/':
-			cout << value1 << " / " << value2 << " = " << value1 / value2 << "\n";
-			break;
-
-		default:
-			cout << "wrong action..." << '\n';
+void deterWinner(char player, char ai) {
+	if ((player == 'R' && ai == 'S') ||
+		(player == 'S' && ai == 'P') ||
+		(player == 'P' && ai == 'R')) {
+		cout << "You won!\n";
 	}
-
+	else if (player == ai) cout << "Tie!\n";
+	else cout << "ai won!\n";
 }
 
+void validateLoop(char player) {
+	if (player != 'R' && player != 'P' && player != 'S')
+		cout << "Invalid input!\n";
+}
+
+int main() {
+	vector<char> ai_moves {'R', 'R', 'S', 'P', 'S', 'P'};
+	char player = 0;
+	int ai_moves_index = 0;
+	char playAgain = 0;
+	//for (char aimoves = 0; cin >> aimoves;) ai_moves.push_back(aimoves);
 
 
-int main() 
-{
-	vector<string> values { "zero", "one", "two", "three", "four", 
-							"five", "six", "seven", "eight", "nine" };
-
-
-	string v1, v2;
-	char action;
-	while (cin >> v1 >> action >> v2) {
-		if ((v1.size() == 1 && isdigit(v1[0])) &&
-			(v2.size() == 1 && isdigit(v2[0]))) {
-			int digit1 = v1[0] - '0';
-			int digit2 = v2[0] - '0';
-
-			if ((digit1 >= 0 && digit1 <= 9) &&
-				(digit2 >= 0 && digit2 <= 9)) {
-				calc(digit1, action, digit2);
-			}
-			else cout << "invalid digit\n";
+	do {
+		cin >> player;
+		if (player != 'R' && player != 'P' && player != 'S') {
+			cout << "Invalid input!\n";
+			continue;
 		}
 
-		else {
-			for (int i = 0; i < values.size(); ++i) {
-				for (int j = 0; j < values.size(); ++j) {
-					if (v1 == values[i] && v2 == values[j]) {
-						calc(i, action, j);
-						break;
-					}
-				}
-			}
-		}
-	}
+		char ai_choice = ai_moves[ai_moves_index];
+
+		cout << "u chose: " << player << "\n";
+		cout << "ai chose: " << ai_choice << "\n";
+
+		deterWinner(player, ai_choice);
+
+		ai_moves_index = (ai_moves_index + 1) % ai_moves.size();
+		
+		cout << "Wanna play again? (Y or N): ";
+		cin >> playAgain;
+
+	} while (playAgain == 'Y' || playAgain == 'y');
+
+	cout << "\nThanks for game!\n";
+
+
 
 	return 0;
 }
