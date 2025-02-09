@@ -15,7 +15,7 @@ int main() {
 		++no_of_temps; // count temperatures
 		sum += temp; // compute sum
 		if (temp > high_temp) high_temp = temp; // find high
-		if (temp < low_temp) low_temp = temp; // find low
+		if (temp < low_temp) low_temp = temp; 
 	}
 
 	cout << "High temperature: " << high_temp << '\n';
