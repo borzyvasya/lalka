@@ -1,38 +1,27 @@
 #include "std_lib_facilities.h"
 
+constexpr double max_temp{ 9569.93 };
+constexpr double min_temp{ 459.67 };
 
-void printName(string name, vector<string> vecnames, vector<int> vecscores) {
-	for (int i = 0; i < vecnames.size(); ++i) {
-		if (vecnames[i] == name) {
-			cout << vecscores[i] << "\n";
-			return;
-		}
-	}
-	cout << "name not found\n";
-}
-
-void printScore(int score, vector<string> vecnames, vector<int> vecscores) {
-	for (int i = 0; i < vecscores.size(); ++i) {
-		if (vecscores[i] == score) {
-			cout << vecnames[i] << "\n";
-			return;
-		}
-	}
-	cout << "score not found\n";
-}
 
 int main() {
-	vector<string> names { "Joe", "Barbara", "Alex" };
-	vector<int> scores {17, 22, 34};
 
-	for (int i = 0; i < names.size(); ++i)
-		cout << "name: " << names[i] << ", score: " << scores[i] << "\n";
+	double sum = 0;
+	double high_temp = max_temp; // initialize to impossibly low
+	double low_temp = min_temp; // initialize to “impossibly high”
+	int no_of_temps = 0;
 
-	string enterName; cin >> enterName;
-	printName(enterName, names, scores);
+	for (double temp; cin >> temp;) { // read temp
+		++no_of_temps; // count temperatures
+		sum += temp; // compute sum
+		if (temp > high_temp) high_temp = temp; // find high
+		if (temp < low_temp) low_temp = temp; // find low
+	}
 
-	int enterScore; cin >> enterScore;
-	printScore(enterScore, names, scores);
+	cout << "High temperature: " << high_temp << '\n';
+	cout << "Low temperature: " << low_temp << '\n';
+	cout << "Average temperature: " << sum / no_of_temps << '\n';
 
-	return 0;
+
+ 	return 0;
 }
