@@ -1,27 +1,47 @@
 #include "std_lib_facilities.h"
 
-constexpr double max_temp{ 9569.93 };
-constexpr double min_temp{ 459.67 };
+constexpr int DAYS = 7;
 
+void check(string day, vector<string> days, vector<int> req_days[DAYS], int value, int& rejected_count) {
+    for (int i = 0; i < days.size(); ++i) {
+        if (day == days[i]) {
+            req_days[i].push_back(value);
+            return;
+        }
+    }
+    rejected_count++;
+}
 
 int main() {
+	try {
+        vector<int> days_of_week[DAYS];
 
-	double sum = 0;
-	double high_temp = max_temp; // initialize to impossibly low
-	double low_temp = min_temp; // initialize to “impossibly high”
-	int no_of_temps = 0;
+        vector<string> valid_days = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
 
-	for (double temp; cin >> temp;) { // read temp
-		++no_of_temps; // count temperatures
-		sum += temp; // compute sum
-		if (temp > high_temp) high_temp = temp; // find high
-		if (temp < low_temp) low_temp = temp; 
+        string day;
+        int value = 0;
+        int rejected_count = 0;
+
+        while (cin >> day >> value) 
+            check(day, valid_days, days_of_week, value, rejected_count);
+
+
+        for (int i = 0; i < valid_days.size(); ++i) {
+            cout << valid_days[i] << ": ";
+            int sum = 0;
+            for (int v : days_of_week[i]) {
+                cout << v << " ";
+                sum += v;
+            }
+            cout << " Sum: " << sum << endl;
+        }
+
+        cout << "Rejected values: " << rejected_count << endl;
+
+        return 0;
 	}
-
-	cout << "High temperature: " << high_temp << '\n';
-	cout << "Low temperature: " << low_temp << '\n';
-	cout << "Average temperature: " << sum / no_of_temps << '\n';
-
-
- 	return 0;
+	catch (exception& e) {
+		cout << e.what() << "\n";
+		return 1;
+	}
 }
